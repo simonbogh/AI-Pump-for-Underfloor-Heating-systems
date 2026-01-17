@@ -185,26 +185,26 @@ Clone this repo to your local machine using `git clone https://github.com/qLienc
 ### Environments:
 All simulink models of these environments can be found in `/Simulink_Models`.
 #### House Environment
-These environments is based on charistica of a normal house.
+These environments is based on characteristics of a normal house.
 * SHTL1 - Simulation environment of a one circuit house environment with dynamic properties of a house (Dynamic properties of Circuit 1)
 * SHTL2 - Simulation environment of a two circuit house environment with dynamic properties of a house (Dynamic properties of Circuit 1 and 2)
 * SHTL3 - Simulation environment of a four circuit house environment with dynamic properties of a house (Dynamic properties of Circuit 1, 2, 3 and 4)
 
 #### Simulation environment of Experimental Setup of House
-These environment is based on a parameter estimation of a experimental setup.
-* SETL1 - Simulation environment of a one circuit experimental setup environment with dynamic properties of a experimental setup (Circuit 3)
-* SETL2 - Simulation environment of a two circuit experimental setup environment with dynamic properties of a experimental setup (Circuit 3 and 4)
-* SETL3 - Simulation environment of a four circuit experimental setup environment with dynamic properties of a experimental setup (Circuit 1,2,3 and 4) (Not available  yet!)
+These environment is based on a parameter estimation of an experimental setup.
+* SETL1 - Simulation environment of a one circuit experimental setup environment with dynamic properties of an experimental setup (Circuit 3)
+* SETL2 - Simulation environment of a two circuit experimental setup environment with dynamic properties of an experimental setup (Circuit 3 and 4)
+* SETL3 - Simulation environment of a four circuit experimental setup environment with dynamic properties of an experimental setup (Circuit 1,2,3 and 4) (Not available yet!)
     
 #### Experimental Setup of House
-These environment is based on a parameter estimation of a experimental setup.
-* ETL1 - Experimental Setup environment of a one circuit experimental setup environment with dynamic properties of a experimental setup (Circuit 3)
-* ETL2 - Experimental Setup environment of a two circuit experimental setup environment with dynamic properties of a experimental setup (Circuit 3 and 4)
-* ETL3 - Experimental Setup environment of a four circuit experimental setup environment with dynamic properties of a experimental setup (Circuit 1,2,3 and 4) (Not available  yet!)
+These environment is based on a parameter estimation of an experimental setup.
+* ETL1 - Experimental Setup environment of a one circuit experimental setup environment with dynamic properties of an experimental setup (Circuit 3)
+* ETL2 - Experimental Setup environment of a two circuit experimental setup environment with dynamic properties of an experimental setup (Circuit 3 and 4)
+* ETL3 - Experimental Setup environment of a four circuit experimental setup environment with dynamic properties of an experimental setup (Circuit 1,2,3 and 4) (Not available yet!)
     
 ### Example:   
    
-Below the user specific specifies the user wants tau = 20, and model should be DQN from pytorch with simulation environment model from Test Level 3 of house environment. 
+Below the user specifies tau = 20, and model should be DQN from pytorch with simulation environment model from Test Level 3 of house environment. 
 
 Running source code:
 `python main.py -tau 20 -model torch_dqn -env shtl3`
