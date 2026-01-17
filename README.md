@@ -145,7 +145,7 @@ tensorflow can be installed by using `pip install tensorflow`
 
 
 ### Clone
-Clone this repo to your local machine using `git clone https://github.com/simonbogh/AI-Pump-for-Underfloor-Heating-systems`
+Clone this repo to your local machine using `git clone https://github.com/qLience/AI-Pump-for-Underfloor-Heating-systems`
 
 
 
