@@ -82,6 +82,7 @@ def ensure_dir(path):
 ensure_dir(SAVES)
 ensure_dir(SAVES_BRAIN)
 ensure_dir(SAVES_PLOTS)
+ensure_dir(SAVES_EXPERIENCE)
 
 # Default parameters
 params = Params()

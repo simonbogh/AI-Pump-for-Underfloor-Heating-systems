@@ -100,7 +100,8 @@ class environment:
             del data[0]
             del data[6]
             data = [float(i) for i in data]
-        except: 
+        except (ValueError, IndexError, AttributeError) as e:
+            print(f'Warning: Failed to decode Matlab state, using last known data: {e}')
             data = self.last_data
         
         return data
@@ -110,7 +111,8 @@ class environment:
         # Unpack from hex (binary array) to double
         try:
             data = array.array('d',data)
-        except: 
+        except (ValueError, TypeError) as e:
+            print(f'Warning: Failed to decode Simulink state, using last known data: {e}')
             data = self.last_data
 
         return data

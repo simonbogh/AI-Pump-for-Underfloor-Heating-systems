@@ -44,7 +44,8 @@ class StartUp():
                 self.T1, self.T2, self.T3, self.T4, self.Tmix, self.Treturn = T1, T2, T3, T4, Tmix, Treturn
                 print('Enrionment Values are [ T1 , T2 , T3 , T4 , Tmix, Treturn ]')
                 print('Enrionment Values are [', T1,',', T2,',', T3,',', T4,',', Tmix,',', Treturn,']')
-            except:
+            except (IndexError, TypeError, ValueError) as e:
+               print(f'Warning: Failed to parse startup environment values, using last known values: {e}')
                T1, T2, T3, T4, Tmix, Treturn = self.T1, self.T2, self.T3, self.T4, self.Tmix, self.Treturn
                
                
@@ -75,8 +76,7 @@ class StartUp():
                 if self.T1 > self.params.goalT1 and self.T2 > self.params.goalT2 and self.T3 > self.params.goalT3 and self.T4 > self.params.goalT4:
                     self.env.sendAction(4) # Open all valves
                     self.WhileHolder = False # Continue to DRL framework
-                elif self.T1 > self.params.goalT1 and self.T2 > self.params.goalT2 and self.T3 > self.params.goalT3 and self.T4 > self.params.goalT4:
-                    self.env.sendAction(4) # Open all valves
+                # Note: Removed duplicate condition (line 78-79 was identical to line 75-77)
                 elif self.T2 > self.params.goalT2 and self.T3 > self.params.goalT3 and self.T4 > self.params.goalT4:
                     self.env.sendAction(5) #1000
                 elif self.T1 > self.params.goalT1 and self.T3 > self.params.goalT3 and self.T4 > self.params.goalT4:
