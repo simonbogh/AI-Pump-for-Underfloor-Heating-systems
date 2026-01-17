@@ -38,7 +38,7 @@ class RewardCalculator:
             print('Enrionment Values are [ T1 , T2 , T3 , T4 , Tmix, Treturn ]')
             print('Enrionment Values are [', T1,',', T2,',', T3,',', T4,',', Tmix,',', Treturn,']')
         except (IndexError, TypeError, ValueError) as e:
-           print(f'Warning: Failed to parse environment values, using last known values: {e}')
+           print('Warning: Failed to parse environment values, using last known values: {}'.format(e))
            T1, T2, T3, T4, Tmix, Treturn = self.T1, self.T2, self.T3, self.T4, self.Tmix, self.Treturn
            self.count += 1
            

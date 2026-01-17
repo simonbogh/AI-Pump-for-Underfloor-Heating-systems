@@ -36,7 +36,7 @@ class AiInputProvider:
             T1, T2, T3, T4, Tmix, Treturn = env_values[0], env_values[1], env_values[2], env_values[3], env_values[4], env_values[5]
             self.T1, self.T2, self.T3, self.T4, self.Tmix, self.Treturn = T1, T2, T3, T4, Tmix, Treturn
         except (IndexError, TypeError, ValueError) as e:
-           print(f'Warning: Failed to parse environment values in AI input, using last known values: {e}')
+           print('Warning: Failed to parse environment values in AI input, using last known values: {}'.format(e))
            T1, T2, T3, T4, Tmix, Treturn = self.T1, self.T2, self.T3, self.T4, self.Tmix, self.Treturn
         
         # Standadize input data

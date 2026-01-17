@@ -101,7 +101,7 @@ class environment:
             del data[6]
             data = [float(i) for i in data]
         except (ValueError, IndexError, AttributeError) as e:
-            print(f'Warning: Failed to decode Matlab state, using last known data: {e}')
+            print('Warning: Failed to decode Matlab state, using last known data: {}'.format(e))
             data = self.last_data
         
         return data
@@ -112,7 +112,7 @@ class environment:
         try:
             data = array.array('d',data)
         except (ValueError, TypeError) as e:
-            print(f'Warning: Failed to decode Simulink state, using last known data: {e}')
+            print('Warning: Failed to decode Simulink state, using last known data: {}'.format(e))
             data = self.last_data
 
         return data
