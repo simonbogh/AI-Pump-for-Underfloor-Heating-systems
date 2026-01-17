@@ -107,7 +107,7 @@ returns an action from the action selector to the environment.
 
 
 ### Test
-Many test have been conducted but in Figure 4. Test 3 is shown for Test Level 3 where the environment "SHTL3" is used.
+Many test have been conducted but in Figure 4. Test 3 is shown for Test Level 3 where the environment "SHTL4" is used.
 This simulation environment consist of a four circuit house environment with dynamic properties of a house with four different rooms(climate zones)
 <p align="center">
   <img src="images/TL4_Test3.svg" height="300" />
