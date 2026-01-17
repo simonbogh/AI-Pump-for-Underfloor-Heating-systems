@@ -176,8 +176,8 @@ Clone this repo to your local machine using `git clone https://github.com/simonb
     -Tmix   -- Start mixing temperature is required when using start up  
   
 ### Required arguments:  
-    -model  -- torch_dqn, torch_dqnlstm, torch_dqnet is in pytorch and tf_dqnet is in tensorflow (dqn = deep q-network, dqnet = dqn + eligibility trace), required=True
-    -env    -- S=Simulation, H=House, E=Experimental setup, T=Test, L=Level, N=level grade, SHTL for simulation of house and everything with E is regarding experimental setup (choices: shtl1, shtl2, shtl3, setl1, setl2, setl3, etl1, etl2, etl3), required=True
+    -model  -- 'torch_dqn, torch_dqnlstm, torch_dqnet is in pytorch and tf_dqnet is in tensorflow (dqn = deep q-network, eli = eligibility_trace)', choices=[TORCH_DQN, TORCH_DQNLSTM, TORCH_DQNET, TF_DQNET], required=True)
+    -env    -- 'S=Simulation, E=Experiment, T=Test, L=Level, N=level grade, TL for normal house and everything with E is regarding experimental setup ', choices=[SHTL12, SHTL3, SHTL4, SETL2, SETL3, SETL4, ETL2, ETL3, ETL4], required=True)
 
     Note startup requires Tmix which have to be above 20
     
