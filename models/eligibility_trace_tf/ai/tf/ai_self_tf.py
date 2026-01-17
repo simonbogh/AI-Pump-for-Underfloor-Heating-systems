@@ -10,10 +10,13 @@ import math
 
 class Dqn():
     def __init__(self, params):
-        try:
-            shutil.rmtree("models/eligibility_trace_tf/tensorboard/")
-        except OSError:
-            print("")
+        # Check if tensorboard directory exists before removing
+        tensorboard_path = "models/eligibility_trace_tf/tensorboard/"
+        if os.path.exists(tensorboard_path):
+            try:
+                shutil.rmtree(tensorboard_path)
+            except OSError:
+                print("")
         self.params = params
         self.reward_window = []
         self.last_action = 0
@@ -25,7 +28,8 @@ class Dqn():
         self.fc1 = slim.fully_connected(inputs=self.input_tensor, num_outputs=params.hidden_size, activation_fn=tf.nn.relu, scope="fc1")
         self.fc2 = slim.fully_connected(inputs=self.fc1, num_outputs=params.hidden_size, activation_fn=tf.nn.relu, scope="fc2")
         self.q = slim.fully_connected(inputs=self.fc2, num_outputs=params.action_size, activation_fn=None, scope="q")
-        self.softmax = slim.softmax(self.q * params.tau, scope="softmax")
+        # TensorFlow 0.12: Use tf.nn.softmax instead of slim.softmax
+        self.softmax = tf.nn.softmax(self.q * params.tau)
         slim.summary.tensor_summary("softmax", self.softmax)
         self.chosen_action = tf.multinomial(self.softmax, 1)
 
@@ -48,7 +52,8 @@ class Dqn():
 
         self.summary_op = slim.summary.merge_all()
         self.train_writer = tf.summary.FileWriter('models/eligibility_trace_tf/tensorboard/', sess.graph)
-        init = tf.global_variables_initializer()
+        # TensorFlow 0.12: Use tf.initialize_all_variables() instead of tf.global_variables_initializer()
+        init = tf.initialize_all_variables()
         self.saver = tf.train.Saver()
         self.sess.run(init)
         self.steps_done = 0
@@ -92,13 +97,15 @@ class Dqn():
         return action
 
     def epsilon_greedy(self):
-			
+        
         sample = random.random()
         eps_threshold = self.params.eps_end + (self.params.eps_start - self.params.eps_end) * \
             math.exp(-1. * self.steps_done / self.params.eps_decay)       
        
         if sample > eps_threshold:
-            action = np.argmax(self.softmax)
+            # Evaluate TensorFlow tensor before applying numpy operation
+            softmax_values = self.sess.run(self.softmax, feed_dict={self.input_tensor: [self.last_state]})
+            action = np.argmax(softmax_values)
             self.steps_done += 1
             return action
         else:
@@ -110,7 +117,8 @@ class Dqn():
         self.reward_window.append(reward)
 
     def score(self):
-        return sum(self.reward_window) / len(self.reward_window) + 1.
+        # Fix: denominator should include +1, not add 1 after division
+        return sum(self.reward_window) / (len(self.reward_window) + 1.)
 
     def save(self, filename):
         self.saver.save(self.sess, filename)

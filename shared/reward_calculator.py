@@ -37,12 +37,13 @@ class RewardCalculator:
             self.T1, self.T2, self.T3, self.T4, self.Tmix, self.Treturn = T1, T2, T3, T4, Tmix, Treturn
             print('Enrionment Values are [ T1 , T2 , T3 , T4 , Tmix, Treturn ]')
             print('Enrionment Values are [', T1,',', T2,',', T3,',', T4,',', Tmix,',', Treturn,']')
-        except:
+        except (IndexError, TypeError, ValueError) as e:
+           print('Warning: Failed to parse environment values, using last known values: {}'.format(e))
            T1, T2, T3, T4, Tmix, Treturn = self.T1, self.T2, self.T3, self.T4, self.Tmix, self.Treturn
            self.count += 1
            
         print('except  called ', self.count)
-		# Absolute distance from temperatures to goal
+        # Absolute distance from temperatures to goal
         distance1 = abs(self.params.goalT1 - T1)
         distance2 = abs(self.params.goalT2 - T2)
         distance3 = abs(self.params.goalT3 - T3)
@@ -72,7 +73,7 @@ class RewardCalculator:
         # Allowed distance from reference room temperature
         max_dist = 0.5
         
-		# Reward Policy - Circuit 1
+        # Reward Policy - Circuit 1
         if 0 <= distance1 <= max_dist and Cn_valves.C1_valve:
             last_reward1 = 1
             if distance1 < self.last_distance1:
@@ -89,7 +90,7 @@ class RewardCalculator:
             last_reward1 = -0.1*distance1
             
             
-		# Reward Policy - Circuit 2
+        # Reward Policy - Circuit 2
         if 0 <= distance2 <= max_dist and Cn_valves.C2_valve:
             last_reward2 = 1
             if distance2 < self.last_distance2:
@@ -106,7 +107,7 @@ class RewardCalculator:
             last_reward2 = -0.1*distance2
             
             
-		# Reward Policy - Circuit 3
+        # Reward Policy - Circuit 3
         if 0 <= distance3 <= max_dist and Cn_valves.C3_valve:
             last_reward3 = 1
             if distance3 < self.last_distance3:
@@ -123,7 +124,7 @@ class RewardCalculator:
             last_reward3 = -0.1*distance3
             
             
-		# Reward Policy - Circuit 4
+        # Reward Policy - Circuit 4
         if 0 <= distance4 <= max_dist and Cn_valves.C4_valve:
             last_reward4 = 1
             if distance4 < self.last_distance4:

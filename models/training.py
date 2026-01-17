@@ -55,12 +55,12 @@ class Training():
     def actionFromNN(self):
         """Returns action from Q-network"""
         return self.action
-	
+    
     def getScores(self):
         """Returns the agents' score"""
-        return scores
-		
-	# Saving experience
+        return self.scores
+        
+    # Saving experience
     def save(self, path, name):
         """Saving training curves tracking the agent score to the path 'saves/plot' with the specified name specified in parse argument in main"""
         plt.plot(self.scores, color='red')

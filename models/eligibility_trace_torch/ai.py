@@ -24,7 +24,7 @@ class SoftmaxBody(nn.Module):
         """Returns action randomly drawn from a distribution of Q-values where
         state is send through Q-network"""
         probs = F.softmax(outputs * self.T)   
-        actions = probs.multinomial()
+        actions = probs.multinomial(num_samples=1)
         return actions
 
 # Making the AI
@@ -74,7 +74,7 @@ class Training:
         """Returns sum of rewards"""
         return sum(self.reward_window)/(len(self.reward_window)+1.)
 
-	# Saving experience
+    # Saving experience
     def save_plot(self, path, name):
         """Saving training curves tracking the agent score to the path 'saves/plot' with the specified name specified in parse argument in main"""
         plt.plot(self.scores, color='red')

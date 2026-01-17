@@ -11,17 +11,17 @@ import array
 SHTL1, SHTL2, SHTL3, SETL1, SETL2, SETL3, ETL1, ETL2, ETL3 = ("shtl1", "shtl2", "shtl3", "setl1", "setl2", "setl3", "etl1", "etl2", "etl3")
 
 class environment:
-	def __init__(self, env_decider):
-		self.env_decider = env_decider
+    def __init__(self, env_decider):
+        self.env_decider = env_decider
         # Connection for sender socket
-		self.sendConn = 0
-		self.sendHost = 'localhost'  # Symbolic name meaning all available interfaces
-		self.sendPort = 50000        # Arbitrary non-privileged port
-		# Connection for receiver socket
-		self.recvConn = 0
-		self.recvHost = 'localhost'  # Symbolic name meaning all available interfaces
-		self.recvPort = 50001        # Arbitrary non-privileged port
-		self.last_data = 0
+        self.sendConn = 0
+        self.sendHost = 'localhost'  # Symbolic name meaning all available interfaces
+        self.sendPort = 50000        # Arbitrary non-privileged port
+        # Connection for receiver socket
+        self.recvConn = 0
+        self.recvHost = 'localhost'  # Symbolic name meaning all available interfaces
+        self.recvPort = 50001        # Arbitrary non-privileged port
+        self.last_data = 0
 	
 	# Creating server Socket
 	def createServerSockets(self):
@@ -81,41 +81,43 @@ class environment:
 		self.recvConn, addr = serverSocketR.accept()
 		print ('Connected by', addr,'on receiver port',self.recvPort)
 	
-	def receiveState(self):
-		"""Returns environment values"""
+    def receiveState(self):
+        """Returns environment values"""
         # Receive state formed as binary array
-		data = self.recvConn.recv(2048);
-		# decode state
-		if self.env_decider == SHTL1 or self.env_decider == SHTL2 or self.env_decider == SHTL3 or self.env_decider == SETL1 or self.env_decider == SETL2 or self.env_decider == SETL3:
-			return self.decodeSimulinkState(data)
-		else:
-			return self.decodeMatlabState(data)
+        data = self.recvConn.recv(2048);
+        # decode state
+        if self.env_decider == SHTL1 or self.env_decider == SHTL2 or self.env_decider == SHTL3 or self.env_decider == SETL1 or self.env_decider == SETL2 or self.env_decider == SETL3:
+            return self.decodeSimulinkState(data)
+        else:
+            return self.decodeMatlabState(data)
         
-	def decodeMatlabState(self, data):
-		"""Returns a sorted array of environment values which was received from matlab"""
+    def decodeMatlabState(self, data):
+        """Returns a sorted array of environment values which was received from matlab"""
         # Unpack from hex (binary array) to double
-		try:
-			data = str(data)
-			data = data.split(",")
-			del data[0]
-			del data[6]
-			data = [float(i) for i in data]
-		except: 
-			data = self.last_data
+        try:
+            data = str(data)
+            data = data.split(",")
+            del data[0]
+            del data[6]
+            data = [float(i) for i in data]
+        except (ValueError, IndexError, AttributeError) as e:
+            print('Warning: Failed to decode Matlab state, using last known data: {}'.format(e))
+            data = self.last_data
         
-		return data
+        return data
 
-	def decodeSimulinkState(self, data):
-		"""Returns a sorted array of environment values which was received from simulink"""
+    def decodeSimulinkState(self, data):
+        """Returns a sorted array of environment values which was received from simulink"""
         # Unpack from hex (binary array) to double
-		try:
-			data = array.array('d',data)
-		except: 
-			data = self.last_data
+        try:
+            data = array.array('d',data)
+        except (ValueError, TypeError) as e:
+            print('Warning: Failed to decode Simulink state, using last known data: {}'.format(e))
+            data = self.last_data
 
-		return data
-		
-	def sendAction(self, msg):
-		"""sends a package encoded (utf-8) to environment"""
-		msg = struct.pack("I",msg)
-		self.sendConn.sendall(msg)#.encode('utf-8'))	
+        return data
+        
+    def sendAction(self, msg):
+        """sends a package encoded (utf-8) to environment"""
+        msg = struct.pack("I",msg)
+        self.sendConn.sendall(msg)#.encode('utf-8'))	

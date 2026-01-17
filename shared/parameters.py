@@ -30,5 +30,7 @@ class Params():
         self.goalT2 = 0
         self.goalT3 = 0
         self.goalT4 = 0
-		# Action selector
+        # Action selector
         self.action_selector = 1 #1 Softmax #2 Epsilon Greedy
+        # Learning mode
+        self.learning_mode = 1  # Default: learning enabled

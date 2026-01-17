@@ -82,6 +82,7 @@ def ensure_dir(path):
 ensure_dir(SAVES)
 ensure_dir(SAVES_BRAIN)
 ensure_dir(SAVES_PLOTS)
+ensure_dir(SAVES_EXPERIENCE)
 
 # Default parameters
 params = Params()
@@ -100,7 +101,7 @@ params.eps_decay = args.ed if args.ed else 2000
 #Experience replay memory
 params.ER_sample_size = args.ers if args.ers else 160
 params.ER_batch_size = args.erb if args.erb else 300
-params.ER_capacity = args.ec if args.erb else 100000
+params.ER_capacity = args.erc if args.erc else 100000
 #Hidden layer
 params.hidden_size = args.hn if args.hn else 60 # neurons in hidden layer
 if args.hl == TWO: # number of hidden layers

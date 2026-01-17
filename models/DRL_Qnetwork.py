@@ -114,23 +114,23 @@ class DQN():
         state is send through Q-network"""
         q_values= self.model(Variable(state))
 
-        probs = F.softmax((q_values)*self.params.tau,dim=1)
+        probs = F.softmax((q_values)*self.params.tau)
         #create a random draw from the probability distribution created from softmax
-        action = probs.multinomial()
+        action = probs.multinomial(num_samples=1)
         self.steps_done += 1
         return action.data[0,0]
-		
+        
     def epsilon_greedy(self, state):
         """Returns action randomly drawn from a distribution of Q-values where
         state is send through Q-network. The highest Q-value will be drawn more
         more frequently as the epsilon greedy policy decays"""
         q_values= self.model(Variable(state))
-			
+            
         sample = random.random()
         eps_threshold = self.params.eps_end + (self.params.eps_start - self.params.eps_end) * \
             math.exp(-1. * self.steps_done / self.params.eps_decay)
         if sample > eps_threshold:
-            action =  action = q_values.type(torch.FloatTensor).data.max(1)[1].view(1, 1)
+            action = q_values.type(torch.FloatTensor).data.max(1)[1].view(1, 1)
             self.steps_done += 1
             return action[0,0]
         else:
@@ -154,7 +154,7 @@ class DQN():
         #This line of code that backward propagates the error into the NN
         #td_loss.backward(retain_variables = True) #userwarning
         td_loss.backward(retain_graph = True)
-		#And this line of code uses the optimizer to update the weights
+        # And this line of code uses the optimizer to update the weights
         self.optimizer.step()
     
     def update(self, reward, new_signal):
@@ -163,13 +163,13 @@ class DQN():
         #which is the new state
         new_state = torch.Tensor(new_signal).float().unsqueeze(0)
         self.memory.push((self.last_state, new_state, torch.LongTensor([int(self.last_action)]), torch.Tensor([self.last_reward])))
-		
-		#After ending in a state its time to play a action
+        
+        # After ending in a state its time to play a action
         if self.params.action_selector == 1: #Softmax
             action = self.softmax_body(new_state)
         elif self.params.action_selector == 2: # epsilon_greedy
             action = self.epsilon_greedy(new_state)
-			
+            
         if len(self.memory.memory) > self.params.ER_batch_size and self.params.learning_mode == 1:
             if len(self.memory.memory) > self.params.ER_capacity:
                 del self.memory.memory[0]
