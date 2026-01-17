@@ -129,15 +129,15 @@ elements if room temperature satisfied requirements. Mean and standard deviation
 
 ## Installation
 ### For AI
-* Python v3.5 or later (tested with Python 3.12)
-* PyTorch (originally developed with v0.3.1, may work with later versions)
-* TensorFlow (originally developed with v0.12, may work with later versions)
+* Python v3.5
+* PyTorch v0.3.1 on CPU
+* TensorFlow v0.12 on CPU
 * Numpy
 * Matplotlib
 
-pytorch can be installed by using `conda install pytorch` or `pip install torch` with anaconda or pip
+pytorch can be installed by using < `conda install -c peterjc123 pytorch` > with anaconda
 
-tensorflow can be installed by using `pip install tensorflow`
+tensorflow for windows can be installed by using < `pip install tensorflow` > or < `pip install https://storage.googleapis.com/tensorflow/windows/cpu/tensorflow-0.12.0rc0-cp35-cp35m-win_amd64.whl` >
 
 ### For Simulation Models for House Environments
 * Matlab R2017b
